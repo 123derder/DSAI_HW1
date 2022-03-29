@@ -11,8 +11,7 @@ if __name__ == '__main__':
                         default='submission.csv',
                         help='output file name')
     args = parser.parse_args()
-print(args.training)
-print(args.output)
+
     
 #!/usr/bin/env python
 # coding: utf-8
@@ -20,15 +19,10 @@ print(args.output)
 # In[104]:
 
 
-import warnings
-import itertools
 import csv
 import pandas as pd
-import numpy as np
 import statsmodels.api as sm
-import matplotlib.pyplot as plt
-from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
-plt.style.use('fivethirtyeight')
+
 df = pd.read_csv(args.training)
 
 
@@ -69,21 +63,10 @@ for i in range(0,15):
     pred_uc.predicted_mean[len(data)+i]-=300
     
 
-ax = data.plot(label='observed', figsize=(30,6))
-pred_uc.predicted_mean.plot(ax=ax, label='Forecast')
-ax.fill_between(pred_ci.index,
-                pred_ci.iloc[:, 0],
-                pred_ci.iloc[:, 1], color='k', alpha=.25)
-#ax.set_xlabel('Date')
-#ax.set_ylabel('CO2 Levels')
- 
-plt.legend()
-plt.show()
+
 
 y_forecasted=pred_uc.predicted_mean
 
-print("y_forecasted")
-print(y_forecasted)
 
 date=[20220330,20220331,20200401,20200402,20200403,20200404,20200405,20200406,20200407,20200408,20200409,20200410,20200411,20200412,20200413]
 with open(args.output,'w', newline='') as csvfile:
